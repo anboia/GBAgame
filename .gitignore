@@ -1,5 +1,5 @@
-.sublime-project
-.elf
-.gba
+*.sublime-project
+*.elf
+*.gba
 build/
 
