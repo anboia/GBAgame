@@ -87,7 +87,7 @@ INLINE u32 key_held(u32 key)
 
 // Gives the keys of a key that are pressed (down now but not before)
 INLINE u32 key_hit(u32 key)
-{	return ( key_curr &~ key_prev) & key;	}
+{	return ( key_curr & (~key_prev)) & key;	}
 
 // Gives the keys of a key that are being released
 INLINE u32 key_released(u32 key)

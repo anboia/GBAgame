@@ -3,7 +3,6 @@
 
 #include "gba_types.h"
 #include "gba_memory.h"
-#include "gba_core.h"
 
 
 
@@ -28,6 +27,7 @@
 
 // ========================================================
 // ===== GLOBALS ==========================================
+extern COLOR * videoPage;
 
 // ========================================================
 // ===== PROTOTYPES =======================================
@@ -47,7 +47,6 @@ INLINE void WaitVBlank()
 	while(REG_VCOUNT >= 160);   // wait till VDraw
 	while(REG_VCOUNT < 160);    // wait till VBlank
 }
-
 
 
 INLINE void DrawPixel4(int x, int y, COLOR clr){
