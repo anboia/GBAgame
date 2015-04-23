@@ -20,4 +20,11 @@ typedef u8 bool;
 
 #define INLINE static inline
 
+typedef u16 SCR_ENTRY, SE;
+typedef struct { u32 data[8];  } TILE, TILE4;
+typedef struct { u32 data[16]; } TILE8;
+typedef SCR_ENTRY	SCREENBLOCK[1024];
+typedef TILE			CHARBLOCK[512];
+
+
 #endif // GBA_TYPES

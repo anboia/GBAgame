@@ -1,4 +1,5 @@
 #include "gba.h"
+#include "text.h"
 
 
 
@@ -7,18 +8,17 @@
 
 int frame;
 
+
+
 // ========================================================
 // ===== general ==========================================
 
 void init() {
-	REG_DISPCNT = DCNT_MODE4 | DCNT_BG2;
-	//videoPage = backBuffer;
-	 videoPage = frontBuffer;
-	frame = 0;
-	// loadImg(10,50, 144, 16, frontBuffer, (u16*)frontBitmap);
-	// loadPalette(frontPal, 8);
+	init_text();
+	print_box("- Hi! how are you?\n\n- I am fine and you?\n\n- Well, today I'm having a lot of fun doing the final project! game programing rocks!! :D");
+	// print_box("- Well, today I'm having a lot of fun doing the final project! game programing rocks!! :D");
 
-	// FlipPage();
+	frame = 0;
 }
 
 
@@ -37,26 +37,10 @@ int main() {
 			key_poll();
 		}
 
-		if(key_hit(KEY_LEFT))	{
-		}
-		if(key_hit(KEY_RIGHT))	{
-		}
-		if(key_hit(KEY_UP))		{
-		}
-		if(key_hit(KEY_DOWN))	{
-		}
-		if(key_hit(KEY_L))		{
-		}
-		if(key_hit(KEY_R))		{
-		}
-		if(key_hit(KEY_A))		{
-		}
-		if(key_hit(KEY_B))		{
-		}
-		if(key_hit(KEY_SELECT))	{
-		}
-		if(key_hit(KEY_START))	{
-		}
+		// switch(state){
+
+		// }
+
 
 		frame++;
 	}

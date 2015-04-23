@@ -50,7 +50,6 @@ INLINE void WaitVBlank()
 
 
 INLINE void DrawPixel4(int x, int y, COLOR clr){
-	// u16 offset = (y * 120 + x);
 	u16 offset = (y * 240 + x) >> 1;
 	if (x & 1)
 		videoPage[offset] = (videoPage[offset] & 0x00FF) | (clr << 8);

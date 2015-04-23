@@ -93,6 +93,26 @@ INLINE u32 key_hit(u32 key)
 INLINE u32 key_released(u32 key)
 {	return (~key_curr &  key_prev) & key;	}
 
+// if(key_hit(KEY_LEFT))	{
+// }
+// if(key_hit(KEY_RIGHT))	{
+// }
+// if(key_hit(KEY_UP))		{
+// }
+// if(key_hit(KEY_DOWN))	{
+// }
+// if(key_hit(KEY_L))		{
+// }
+// if(key_hit(KEY_R))		{
+// }
+// if(key_hit(KEY_A))		{
+// }
+// if(key_hit(KEY_B))		{
+// }
+// if(key_hit(KEY_SELECT))	{
+// }
+// if(key_hit(KEY_START))	{
+// }
 
 
 #endif // GBA_INPUT

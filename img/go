@@ -1,0 +1,18 @@
+#!/bin/sh
+#for i in {a..e}; do cp ./template.cpp ./solve/${i}.cpp; done
+if [ $# -eq 0 ]
+then
+	echo "A shell script to print multiplication table."
+	echo "Usage : $0 File"
+	exit 1
+fi
+
+file=$1
+max="$(identify -format "%[fx:(w-1)/9]" $file)"
+cp $file out.png
+for i in $(seq 0 $max)
+do
+	convert  out.png -chop 1x0+$(( $i * 8))+0 out.png
+done
+convert  out.png -chop  0x1+0+0 out.png
+

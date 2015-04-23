@@ -1,5 +1,6 @@
 DEVKITPRO	:= /Users/andresaboia/devkitPro
 DEVKITARM 	:= ${DEVKITPRO}/devkitARM
+# http://sourceforge.net/projects/devkitpro/files/Automated%20Installer/
 
 #---------------------------------------------------------------------------------
 # Clear the implicit built in rules
