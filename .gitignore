@@ -2,5 +2,10 @@
 *.sublime-workspace
 *.elf
 *.gba
+*.zip
 build/
+include/gba_.h
+source/gba_.c
+img/png/
+img/sprites/
 

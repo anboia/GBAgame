@@ -7,6 +7,7 @@
 #include "gba_video.h"
 #include "gba_input.h"
 #include "gba_math.h"
+#include "gba_sprite.h"
 
 
 #endif // GBA_H

@@ -105,7 +105,7 @@ void print_box(const char *str){
 
 void init_text(){
 	REG_BG0CNT = BG_CBB(0) | BG_SBB(30) | BG_COLOR256 | TEXTBG_SIZE_256x256;
-	REG_DISPCNT = DCNT_MODE0 | DCNT_BG0;
+	REG_DISPCNT = MODE_0 | BG0_ENABLE;
 	// Load palette
 	memcpy(paletteMem, fontPal, fontPalLen);
 	// Load tiles into CBB 0

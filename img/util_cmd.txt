@@ -1,0 +1,9 @@
+
+# convert sprite to 1D tiles 4bpp
+grit dude.bmp -gB4 [-Mw 2 -Mh 4] -ftc
+
+#conver sprite to 2d tiles 8bpp
+grit sprite_data_2d_8bpp.bmp -gB8 -ftc -gz! -pu16 -gu8
+
+
+convert +append *.bmp out.bmp

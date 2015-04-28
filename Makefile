@@ -22,7 +22,7 @@ include $(DEVKITARM)/gba_rules
 #---------------------------------------------------------------------------------
 TARGET		:=	$(shell basename $(CURDIR))_mb
 BUILD		:=	build
-SOURCES		:=	source
+SOURCES		:=	source img
 DATA		:=
 GRAPHICS	:=	gfx
 INCLUDES	:=	include img
