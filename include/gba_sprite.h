@@ -17,6 +17,8 @@
 #define OBJ_MAP_2D 0x0
 #define OBJ_ENABLE 0x1000
 
+#define TID_2D(i,j) ((i<<5)+j)
+
 /* Attribute 0 */
 #define MODE_NORMAL				 0				// Regular object
 #define ROTATION_FLAG			0x0100		// Affine object
@@ -41,16 +43,18 @@
 #define ROTDATA(n) ((n) << 9)
 #define HORIZONTAL_FLIP		0x1000	// Horizontal flip (reg obj only)
 #define VERTICAL_FLIP			0x2000	// Vertical flip (reg obj only)
+#define SIZE_8			 0
+#define SIZE_16		0x4000
+#define SIZE_32		0x8000
+#define SIZE_64		0xC000
 
 #define ATTR1_X_MASK		0x01FF
 #define ATTR1_X_SHIFT			 0
 #define ATTR1_X(n)			((n)<<ATTR1_X_SHIFT)
 
-
-#define SIZE_8			 0
-#define SIZE_16		0x4000
-#define SIZE_32		0x8000
-#define SIZE_64		0xC000
+#define ATTR1_FLIP_MASK		0x3000
+#define ATTR1_FLIP_SHIFT		12
+#define ATTR1_FLIP(n)		((n)<<ATTR1_FLIP_SHIFT)
 
 /* Attribute 2 */
 #define PRIORITY(n) ((n) << 10)
@@ -79,6 +83,7 @@ typedef struct SpriteInfo
 	u8			dir;			// Look direction
 	u8			objId;		// Object index
 	s32			aniFrame;	// Animation frame counter
+	s32 		cx, cy;		// Center offset
 } SpriteInfo;
 
 // ========================================================

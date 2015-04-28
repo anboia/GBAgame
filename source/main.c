@@ -10,20 +10,26 @@
 //sprite data
 #include "sprite_data_2d_8bpp.h"
 
+// ========================================================
+// ===== TYPES ============================================
+
+typedef enum {
+	SCENE_1 = 0,
+	SCENE_2,
+	SCENE_3,
+} scene_state;
+
 
 // ========================================================
 // ===== GLOBALS ==========================================
 
+scene_state current_scene;
 
 int frame;
 
-
-// SCENE 1
-SpriteInfo	road1_dude;			// sprite user
-
-
 // ========================================================
-// ===== general ==========================================
+// ===== SCENE 1 ==========================================
+
 void init_scene_1(){
 	REG_DISPCNT = MODE_0 | BG1_ENABLE;
 	// bg1
@@ -35,15 +41,42 @@ void init_scene_1(){
 	// sprite
 	oam_init();
 	DMAFastCopy((void*) sprite_data_2d_8bppPal, (void*) SPaletteMem, 128, DMA_32NOW);
-	DMAFastCopy((void*) sprite_data_2d_8bppTiles, (void*) spriteData, 1024, DMA_32NOW);
+	DMAFastCopy((void*) sprite_data_2d_8bppTiles, (void*) spriteData, 4096, DMA_32NOW);
 	dude_init(&road1_dude, 120<<8, 80<<8, 0);
 }
 
+void update_scene_1(){
+	int x, y;
+	dude_input(&road1_dude);
+	dude_animate(&road1_dude);
+	dude_move(&road1_dude);
+
+	x= road1_dude.x>>8, y= road1_dude.y>>8;
+	vp_center(&road1_vp, x, y);
+}
+
+void draw_scene_1(){
+	updateSpriteMemory();
+	bg_update(&road1_bg, &road1_vp);
+}
+
+// ========================================================
+// ===== SCENE 2 ==========================================
+void init_scene_2(){}
+void update_scene_2(){}
+void draw_scene_2(){}
+// ========================================================
+// ===== SCENE 3 ==========================================
+void init_scene_3(){}
+void update_scene_3(){}
+void draw_scene_3(){}
+
+
+// ========================================================
+// ===== general ==========================================
 
 void init() {
-
-	init_scene_1();
-
+	current_scene = SCENE_1;
 	// init_text();
 	// print_box("- Hi! how are you?\n\n- I am fine and you?\n\n- Well, today I'm having a lot of fun doing the final project! game programing rocks!! :D");
 	// print_box("- Well, today I'm having a lot of fun doing the final project! game programing rocks!! :D");
@@ -51,37 +84,27 @@ void init() {
 	frame = 0;
 }
 
-
 // ========================================================
 // ===== main =============================================
 
 int main() {
 
 	init();
-
-	int x, y;
+	switch(current_scene){
+		case SCENE_1: init_scene_1();
+		case SCENE_2: init_scene_2();
+		case SCENE_3: init_scene_3();
+	}
 
 	while(1) {
 		WaitVBlank();
-
 		key_poll();
 
-		dude_input(&road1_dude);
-		dude_animate(&road1_dude);
-		dude_move(&road1_dude);
-
-		x= road1_dude.x>>8, y= road1_dude.y>>8;
-
-		vp_center(&road1_vp, x, y);
-		updateSpriteMemory();
-
-		bg_update(&road1_bg, &road1_vp);
-
-
-		// switch(state){
-
-		// }
-
+		switch(current_scene){
+			case SCENE_1: update_scene_1(); draw_scene_1(); break;
+			case SCENE_2: update_scene_2(); draw_scene_2(); break;
+			case SCENE_3: update_scene_3(); draw_scene_3(); break;
+		}
 
 		frame++;
 	}

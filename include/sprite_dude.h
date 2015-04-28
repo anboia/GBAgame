@@ -13,12 +13,13 @@ enum LookDir
 #define SPR_STATE_STAND		0x0100
 #define SPR_STATE_WALK		0x0200
 
-#define DUDE_SPEED				0x0100
+#define DUDE_SPEED				0x00D0
 
 
 // ========================================================
 // ===== GLOBALS ==========================================
 
+SpriteInfo	road1_dude;			// sprite user
 
 // ========================================================
 // ===== PROTOTYPES =======================================
@@ -30,6 +31,10 @@ void dude_input(SpriteInfo *dude);
 
 void dude_move(SpriteInfo *dude);
 void dude_animate(SpriteInfo *dude);
+
+void dude_ani_stand(SpriteInfo *dude);
+void dude_ani_walk(SpriteInfo *dude);
+
 
 
 

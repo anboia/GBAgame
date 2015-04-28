@@ -9,16 +9,27 @@
 // ===== DEFINES ==========================================
 
 // ===== KEY INPUT
-#define KEY_A        0x0001
-#define KEY_B        0x0002
-#define KEY_SELECT   0x0004
-#define KEY_START    0x0008
-#define KEY_RIGHT    0x0010
-#define KEY_LEFT     0x0020
-#define KEY_UP       0x0040
-#define KEY_DOWN     0x0080
-#define KEY_R        0x0100
-#define KEY_L        0x0200
+#define KEY_A					0x0001
+#define KEY_B					0x0002
+#define KEY_SELECT		0x0004
+#define KEY_START			0x0008
+#define KEY_RIGHT			0x0010
+#define KEY_LEFT			0x0020
+#define KEY_UP				0x0040
+#define KEY_DOWN			0x0080
+#define KEY_R					0x0100
+#define KEY_L					0x0200
+
+#define KEY_ACCEPT		0x0009	// Accept buttons: A or start
+#define KEY_CANCEL		0x0002	// Cancel button: B
+#define KEY_RESET			0x030C	// St+Se+L+R
+
+#define KEY_FIRE			0x0003	// Fire buttons: A or B
+#define KEY_SPECIAL		0x000C	// Special buttons: Select or Start
+#define KEY_DIR				0x00F0	// Directions: left, right, up down
+#define KEY_SHOULDER	0x0300	// L or R
+
+#define KEY_ANY			0x03FF	//!< Here's the Any key :)
 
 #define KEY_MASK		0x03FF
 
