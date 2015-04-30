@@ -31,11 +31,17 @@ int frame;
 // ===== SCENE 1 ==========================================
 
 void init_scene_1(){
-	REG_DISPCNT = MODE_0 | BG1_ENABLE;
+
+
+	REG_DISPCNT = MODE_0 | BG1_ENABLE | BG0_ENABLE;
+
 	// bg1
 	DMAFastCopy((void*) Map_Palette, (void*) BGPaletteMem, 128, DMA_32NOW);
-	DMAFastCopy((void*) Road1_Tiles, (void*) charBaseBlock(0), sizeof(Road1_Tiles)>>2, DMA_32NOW);
-	bg_init(&road1_bg, 1, BG_CBB(0) | BG_SBB(20) | BG_COLOR256 | TEXTBG_SIZE_256x256, Road1_Map, ROAD1_WIDTH, ROAD1_HEIGHT);
+	DMAFastCopy((void*) Road1_Tiles, (void*) charBaseBlock(1), sizeof(Road1_Tiles)>>2, DMA_32NOW);
+	bg_init(&road1_bg, 1, BG_CBB(1) | BG_SBB(29) | BG_COLOR256 | TEXTBG_SIZE_256x256 | 2, Road1_Map, ROAD1_WIDTH, ROAD1_HEIGHT);
+
+	// bg0
+	init_text();
 
 	REG_DISPCNT |= OBJ_ENABLE | OBJ_MAP_2D;
 	// sprite
@@ -43,6 +49,10 @@ void init_scene_1(){
 	DMAFastCopy((void*) sprite_data_2d_8bppPal, (void*) SPaletteMem, 128, DMA_32NOW);
 	DMAFastCopy((void*) sprite_data_2d_8bppTiles, (void*) spriteData, 4096, DMA_32NOW);
 	dude_init(&road1_dude, 120<<8, 80<<8, 0);
+
+	// draw_box(18, TILE_ASCI_OPAC);
+	print_story(2, "- Hi! how are you?\n\n- I am fine and you?\n\n- Well, today I'm having a lot of fun doing the final project! game programing rocks!! :D", "- Well, today I'm having a lot of fun doing the final project! game programing rocks!! :D");
+
 }
 
 void update_scene_1(){
@@ -77,10 +87,6 @@ void draw_scene_3(){}
 
 void init() {
 	current_scene = SCENE_1;
-	// init_text();
-	// print_box("- Hi! how are you?\n\n- I am fine and you?\n\n- Well, today I'm having a lot of fun doing the final project! game programing rocks!! :D");
-	// print_box("- Well, today I'm having a lot of fun doing the final project! game programing rocks!! :D");
-
 	frame = 0;
 }
 

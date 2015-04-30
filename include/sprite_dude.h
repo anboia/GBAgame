@@ -13,7 +13,7 @@ enum LookDir
 #define SPR_STATE_STAND		0x0100
 #define SPR_STATE_WALK		0x0200
 
-#define DUDE_SPEED				0x00D0
+#define DUDE_SPEED				0x00B0
 
 
 // ========================================================

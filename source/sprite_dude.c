@@ -4,15 +4,15 @@
 // Default link attributes
 const Sprite dudeObjs[1]=
 {
-	{	0 | MODE_NORMAL 		 | COLOR_256 | TALL, SIZE_32, TID_2D(0,0), 0	},
+	{	0 | MODE_NORMAL 		 | COLOR_256 | TALL, SIZE_32, TID_2D(0,0)| 1<<11, 0	},
 };
 
 const u32 id_stand[4]= { TID_2D(4,0), TID_2D(0,0), TID_2D(4,0), TID_2D(8,0) };
 const u32 id_walk[4][8]= {
- {TID_2D(4,4), TID_2D(4,4), TID_2D(4,4), TID_2D(4,4), TID_2D(4,8), TID_2D(4,8), TID_2D(4,8), TID_2D(4,8)},
- {TID_2D(0,4), TID_2D(0,4), TID_2D(0,4), TID_2D(0,4), TID_2D(0,8), TID_2D(0,8), TID_2D(0,8), TID_2D(0,8)},
- {TID_2D(4,4), TID_2D(4,4), TID_2D(4,4), TID_2D(4,4), TID_2D(4,8), TID_2D(4,8), TID_2D(4,8), TID_2D(4,8)},
- {TID_2D(8,4), TID_2D(8,4), TID_2D(8,4), TID_2D(8,4), TID_2D(8,8), TID_2D(8,8), TID_2D(8,8), TID_2D(8,8)},
+ {TID_2D(4,4), TID_2D(4,4), TID_2D(4,0), TID_2D(4,0), TID_2D(4,8), TID_2D(4,8), TID_2D(4,8), TID_2D(4,0)},
+ {TID_2D(0,4), TID_2D(0,4), TID_2D(0,0), TID_2D(0,0), TID_2D(0,8), TID_2D(0,8), TID_2D(0,8), TID_2D(0,0)},
+ {TID_2D(4,4), TID_2D(4,4), TID_2D(4,0), TID_2D(4,0), TID_2D(4,8), TID_2D(4,8), TID_2D(4,8), TID_2D(4,0)},
+ {TID_2D(8,4), TID_2D(8,4), TID_2D(8,0), TID_2D(8,0), TID_2D(8,8), TID_2D(8,8), TID_2D(8,8), TID_2D(8,0)},
 };
 
 void dude_init(SpriteInfo *dude, int x, int y, int dude_id)
@@ -83,7 +83,7 @@ void dude_animate(SpriteInfo *dude){
 		dude_ani_stand(dude);
 		break;
 	case SPR_STATE_WALK:
-		dude->aniFrame += 0x56;
+		dude->aniFrame += DUDE_SPEED/3;
 		dude_ani_walk(dude);
 	}
 }
@@ -96,7 +96,7 @@ void dude_ani_stand(SpriteInfo *dude){
 	BFN_SET(obj[0].attribute0, pt.y, ATTR0_Y);
 	BFN_SET(obj[0].attribute1, pt.x, ATTR1_X);
 	BFN_SET(obj[0].attribute1,    0, ATTR1_FLIP);
-	obj[0].attribute2 = id_stand[dir];
+	obj[0].attribute2 = id_stand[dir] | 1<<11;
 	if(dir == LOOK_LEFT) obj[0].attribute1 |= HORIZONTAL_FLIP;
 
 }
@@ -109,7 +109,7 @@ void dude_ani_walk(SpriteInfo *dude){
 	BFN_SET(obj[0].attribute0, pt.y, ATTR0_Y);
 	BFN_SET(obj[0].attribute1, pt.x, ATTR1_X);
 	BFN_SET(obj[0].attribute1,    0, ATTR1_FLIP);
-	obj[0].attribute2 = id_walk[dir][(frame)];
+	obj[0].attribute2 = id_walk[dir][(frame)] |  1<<11;
 	if(dir == LOOK_LEFT) obj[0].attribute1 |= HORIZONTAL_FLIP;
 
 }

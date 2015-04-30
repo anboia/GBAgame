@@ -3,9 +3,11 @@
 *.elf
 *.gba
 *.zip
+/Makefile
 build/
 include/gba_.h
 source/gba_.c
 img/png/
 img/sprites/
+img/go
 

@@ -63,7 +63,7 @@ INLINE u32 key_transit(u32 key);
 INLINE u32 key_held(u32 key);
 INLINE u32 key_hit(u32 key);
 INLINE u32 key_released(u32 key);
-
+INLINE void wait_key(u32 key);
 
 // ========================================================
 // ===== INLINES ==========================================
@@ -103,6 +103,15 @@ INLINE u32 key_hit(u32 key)
 // Gives the keys of a key that are being released
 INLINE u32 key_released(u32 key)
 {	return (~key_curr &  key_prev) & key;	}
+
+INLINE void wait_key(u32 key)
+{
+	while(1){
+		key_poll();
+		if(key_hit(key))
+		return;
+	}
+}
 
 // if(key_hit(KEY_LEFT))	{
 // }

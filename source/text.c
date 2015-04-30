@@ -1,24 +1,7 @@
 #include "text.h"
 #include "string.h"
 
-#define DIALOG_WIDTH 28
 
-// Tiles Offset
-#define TILE_ASCI_TRAN 0
-#define TILE_ASCI_OPAC 95
-#define TILE_BORDER_1 190
-#define TILE_BORDER_2 199
-
-// Borders offset
-#define BORDER_TOP_LEFT			0
-#define BORDER_TOP					1
-#define BORDER_TOP_RIGHT		2
-#define BORDER_LEFT 				3
-#define BORDER_MIDDLE				4
-#define BORDER_RIGHT 				5
-#define BORDER_BOTTOM_LEFT 	6
-#define BORDER_BOTTOM 			7
-#define BORDER_BOTTOM_RIGHT	8
 
 // ========================================================
 // ===== STRUCTS ==========================================
@@ -33,7 +16,7 @@
 void print(int x, int y, const char *str, int type)
 {
 	int c;
-	SCR_ENTRY *dst = &se_mem[30][y*32+x];
+	SCR_ENTRY *dst = &se_mem[TEXT_SBB][y*32+x];
 
 	x=0;
 	while((c=*str++) != 0)
@@ -47,10 +30,14 @@ void print(int x, int y, const char *str, int type)
 	}
 }
 void set_tile(int x, int y, int id){
-	se_mem[30][y*32+x] = id;
+	se_mem[TEXT_SBB][y*32+x] = id;
 }
-void draw_box(int h){
+void draw_box(int h, int type){
 	int top = 20-h-2, left = 1, bottom = 19, right = 28, i;
+	for(i = top; i<bottom; i++)
+	{
+		print(2, i, "                          ", type);
+	}
 
 	set_tile(left, top, 		TILE_BORDER_1+BORDER_TOP_LEFT);
 	set_tile(right, top, 		TILE_BORDER_1+BORDER_TOP_RIGHT);
@@ -98,17 +85,42 @@ void print_box(const char *str){
 			line++;
 
 	// print string
+	draw_box(line, TILE_ASCI_OPAC);
 	print( 2, 19 - line, buff, TILE_ASCI_OPAC);
-	draw_box(line);
 }
 
+void reset_text(){
+	memset(&se_mem[TEXT_SBB][0], TILE_ASCI_TRAN+' '-32, 2048);
+}
 
+void print_story(int num, ... )
+{
+	va_list arguments;
+	va_start ( arguments, num );
+
+	reset_text();
+	while(num--) {
+		print_box(va_arg ( arguments, const char * ) );
+		wait_key(KEY_A);
+		reset_text();
+	}
+	va_end ( arguments );
+}
+void init_palette(){
+	// memcpy(paletteMem, fontPal, fontPalLen);
+	int i = 0;
+	for (i = PALETTE_START; i < PALETTE_START+PALETTE_SIZE; ++i)
+	{
+		paletteMem[i] = fontPal[i];
+	}
+}
 void init_text(){
-	REG_BG0CNT = BG_CBB(0) | BG_SBB(30) | BG_COLOR256 | TEXTBG_SIZE_256x256;
-	REG_DISPCNT = MODE_0 | BG0_ENABLE;
+	REG_BG0CNT = BG_CBB(TEXT_CBB) | BG_SBB(TEXT_SBB) | BG_COLOR256 | TEXTBG_SIZE_256x256 | 1;
+
 	// Load palette
-	memcpy(paletteMem, fontPal, fontPalLen);
+	init_palette();
+
 	// Load tiles into CBB 0
-	memcpy(&tile_mem[0][0], fontTiles, fontTilesLen);
+	memcpy(&tile_mem[TEXT_CBB][0], fontTiles, fontTilesLen);
 
 }
