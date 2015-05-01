@@ -35,7 +35,7 @@
 
 
 
-#define TEXT_SBB 30
+#define TEXT_SBB 7
 #define TEXT_CBB 0
 
 /*
@@ -63,6 +63,8 @@ void draw_box(int hight, int type);
 void init_text();
 void reset_text();
 void print_story( int num, ... );
+
+void debug(int x, int y, int k);
 
 
 #endif // TEXT

@@ -1,3 +1,5 @@
+# DEVKITPRO	:= /Users/andresaboia/devkitPro
+# DEVKITARM 	:= ${DEVKITPRO}/devkitARM
 # http://sourceforge.net/projects/devkitpro/files/Automated%20Installer/
 
 #---------------------------------------------------------------------------------
@@ -18,12 +20,12 @@ include $(DEVKITARM)/gba_rules
 # DATA is a list of directories containing data files
 # INCLUDES is a list of directories containing header files
 #---------------------------------------------------------------------------------
-TARGET		:=	$(shell basename $(CURDIR))_mb
+TARGET		:=	$(shell basename $(CURDIR))
 BUILD		:=	build
-SOURCES		:=	source img
+SOURCES		:=	source img maps
 DATA		:=
 GRAPHICS	:=	gfx
-INCLUDES	:=	include img
+INCLUDES	:=	include img maps
 
 #---------------------------------------------------------------------------------
 # options for code generation

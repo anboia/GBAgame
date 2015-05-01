@@ -1,7 +1,6 @@
 #ifndef GBA_INPUT
 #define GBA_INPUT
 
-#include "gba_input.h"
 #include "gba_types.h"
 #include "gba_memory.h"
 

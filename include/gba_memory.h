@@ -6,6 +6,7 @@
 // ========================================================
 // ===== DEFINES ==========================================
 
+
 // === MEMMAP ===========================================
 
 // REG_DISPCNT
@@ -45,7 +46,7 @@
 
 #define DCNT_PAGE				0x0010
 
-// --- VRAM ---
+// VRAM access
 // tile_mem[y] = TILE[]   (char block y)
 // tile_mem[y][x] = TILE (char block y, tile x)
 #define tile_mem		( (CHARBLOCK*)MEM_VRAM)
@@ -114,16 +115,6 @@
 #define DMA_32 0x04000000
 #define DMA_32NOW (DMA_ENABLE | DMA_TIMING_IMMEDIATE | DMA_32)
 #define DMA_16NOW (DMA_ENABLE | DMA_TIMING_IMMEDIATE | DMA_16)
-
-// ========================================================
-// ===== GLOBALS ==========================================
-
-
-
-// ========================================================
-// ===== PROTOTYPES =======================================
-// INLINE void DMAFastCopy(void* src, void* dest, unsigned int count, unsigned int mode);
-
 
 // ========================================================
 // ===== INLINES ==========================================

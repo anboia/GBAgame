@@ -2,15 +2,6 @@
 #include "string.h"
 
 
-
-// ========================================================
-// ===== STRUCTS ==========================================
-
-
-// ========================================================
-// ===== GLOBALS ==========================================
-
-
 // ========================================================
 // ===== FUNCTIONS ========================================
 void print(int x, int y, const char *str, int type)
@@ -106,6 +97,7 @@ void print_story(int num, ... )
 	}
 	va_end ( arguments );
 }
+
 void init_palette(){
 	// memcpy(paletteMem, fontPal, fontPalLen);
 	int i = 0;
@@ -114,8 +106,9 @@ void init_palette(){
 		paletteMem[i] = fontPal[i];
 	}
 }
+
 void init_text(){
-	REG_BG0CNT = BG_CBB(TEXT_CBB) | BG_SBB(TEXT_SBB) | BG_COLOR256 | TEXTBG_SIZE_256x256 | 1;
+	REG_BG0CNT = BG_CBB(TEXT_CBB) | BG_SBB(TEXT_SBB) | BG_COLOR256 | TEXTBG_SIZE_256x256 ;
 
 	// Load palette
 	init_palette();
@@ -123,4 +116,11 @@ void init_text(){
 	// Load tiles into CBB 0
 	memcpy(&tile_mem[TEXT_CBB][0], fontTiles, fontTilesLen);
 
+}
+
+
+void debug(int x, int y, int k){
+	char buff[10];
+	sprintf(buff, "result: %d", k);
+	print(x,y, buff, TILE_ASCI_TRAN);
 }

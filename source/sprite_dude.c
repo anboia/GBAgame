@@ -2,7 +2,7 @@
 #include "game_map.h"
 
 // Default link attributes
-const Sprite dudeObjs[1]=
+Sprite dudeObjs[1]=
 {
 	{	0 | MODE_NORMAL 		 | COLOR_256 | TALL, SIZE_32, TID_2D(0,0)| 1<<11, 0	},
 };
@@ -15,27 +15,39 @@ const u32 id_walk[4][8]= {
  {TID_2D(8,4), TID_2D(8,4), TID_2D(8,0), TID_2D(8,0), TID_2D(8,8), TID_2D(8,8), TID_2D(8,8), TID_2D(8,0)},
 };
 
-void dude_init(SpriteInfo *dude, int x, int y, int dude_id)
+void dude_init(SpriteHandler *sh, VIEWPORT *current_vp, int x, int y, int dude_id)
 {
-	dude->x= x;
-	dude->y= y;
-	dude->vx= dude->vy= 0;
-	dude->cx = -8;
-	dude->cy = -16;
+	sh->dude.current_vp = current_vp;
 
-	dude_set_state(dude, SPR_STATE_STAND);
-	dude->dir 	= LOOK_RIGHT;
-	dude->objId = dude_id;
+	sh->dude.x= x;
+	sh->dude.y= y;
+	sh->dude.vx= sh->dude.vy= 0;
+	sh->dude.cx = -8;
+	sh->dude.cy = -16;
 
-	DMAFastCopy(dudeObjs, &oamBuff[dude_id], 2, DMA_32NOW);
+	dude_set_state(&sh->dude, SPR_STATE_STAND);
+	sh->dude.dir 	= LOOK_RIGHT;
+	sh->dude.objId = dude_id;
+	sh->dude.oamBuff = sh->oamBuff;
+
+	DMAFastCopy(dudeObjs, &(sh->oamBuff[dude_id]), 2, DMA_32NOW);
 }
+void dude_update(SpriteCharacter *dude, VIEWPORT *vp){
 
-void dude_set_state(SpriteInfo *dude, u32 state)
+	int x, y;
+	dude_input(dude);
+	dude_animate(dude);
+	dude_move(dude);
+
+	x= (dude->x)>>8, y= (dude->y)>>8;
+	vp_center(vp, x, y);
+}
+void dude_set_state(SpriteCharacter *dude, u32 state)
 {
 	dude->state= state;
 	dude->aniFrame= 0;
 }
-void dude_input(SpriteInfo *dude)
+void dude_input(SpriteCharacter *dude)
 {
 	dude->vx= dude->vy= 0;
 
@@ -68,7 +80,7 @@ void dude_input(SpriteInfo *dude)
 		dude_set_state(dude, SPR_STATE_WALK);
 }
 
-void dude_move(SpriteInfo *dude)
+void dude_move(SpriteCharacter *dude)
 {
 	// collision testing here
 
@@ -76,7 +88,7 @@ void dude_move(SpriteInfo *dude)
 	dude->y += dude->vy;
 }
 
-void dude_animate(SpriteInfo *dude){
+void dude_animate(SpriteCharacter *dude){
 	switch(dude->state)
 	{
 	case SPR_STATE_STAND:
@@ -88,9 +100,9 @@ void dude_animate(SpriteInfo *dude){
 	}
 }
 
-void dude_ani_stand(SpriteInfo *dude){
-	Sprite *obj= &oamBuff[dude->objId];
-	PT pt = { (dude->x>>8)-road1_vp.x+dude->cx, (dude->y>>8) - road1_vp.y +dude->cy};
+void dude_ani_stand(SpriteCharacter *dude){
+	Sprite *obj= &dude->oamBuff[dude->objId];
+	PT pt = { (dude->x>>8) - dude->current_vp->x+dude->cx, (dude->y>>8) - dude->current_vp->y +dude->cy};
 	int dir = dude->dir;
 
 	BFN_SET(obj[0].attribute0, pt.y, ATTR0_Y);
@@ -100,9 +112,9 @@ void dude_ani_stand(SpriteInfo *dude){
 	if(dir == LOOK_LEFT) obj[0].attribute1 |= HORIZONTAL_FLIP;
 
 }
-void dude_ani_walk(SpriteInfo *dude){
-	Sprite *obj= &oamBuff[dude->objId];
-	PT pt = { (dude->x>>8)-road1_vp.x+dude->cx, (dude->y>>8) - road1_vp.y +dude->cy};
+void dude_ani_walk(SpriteCharacter *dude){
+	Sprite *obj= &dude->oamBuff[dude->objId];
+	PT pt = { (dude->x>>8)- dude->current_vp->x+dude->cx, (dude->y>>8) - dude->current_vp->y +dude->cy};
 	int dir = dude->dir;
 	int frame = (dude->aniFrame>>8) & 7;
 

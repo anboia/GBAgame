@@ -3,7 +3,6 @@
 
 #include "gba.h"
 
-
 // ========================================================
 // ===== DEFINES ==========================================
 /* OAM */
@@ -61,55 +60,20 @@
 #define PALETTE(n) ((n) << 12)
 
 
-// ========================================================
-// ===== TYEPES ===========================================
-
-typedef struct Sprite {
-	/* Attribute 0: Color mode, sprite shape, y location */
-	u16 attribute0;
-	/* Attribute 1: Base size, horizontal & vertical flip, x location */
-	u16 attribute1;
-	/* Attribute 2: Image location, priority */
-	u16 attribute2;
-	u16 attribute3;
-} ALIGN4 Sprite;
-
-
-typedef struct SpriteInfo
-{
-	s32			x, y;			// Position
-	s32			vx, vy;		// Velocity
-	u16			state;		// Sprite state
-	u8			dir;			// Look direction
-	u8			objId;		// Object index
-	s32			aniFrame;	// Animation frame counter
-	s32 		cx, cy;		// Center offset
-} SpriteInfo;
-
-// ========================================================
-// ===== GLOBALS ==========================================
-
-/* Copy of OAM */
-Sprite oamBuff[128];
 
 // ========================================================
 // ===== PROTOTYPES =======================================
 
 INLINE void updateSpriteMemory();
-INLINE void obj_hide(Sprite *obj);
-
-void oam_init();
+void oam_init(Sprite * oamBuff);
 
 // ========================================================
 // ===== INLINES ==========================================
 
-INLINE void updateSpriteMemory() {
+INLINE void updateSpriteMemory(Sprite *oamBuff) {
 	// memcpy(oamMem, oamBuff, 512);
 	DMAFastCopy((void*) oamBuff, (void*) oamMem, 128, DMA_32NOW);
 }
-INLINE void obj_hide(Sprite *obj)
-{		}
-
 
 
 #endif // GBA_SPRITE
